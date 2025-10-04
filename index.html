@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>For You ❤️</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box }
+  body {
+    background: linear-gradient(135deg, #0f182a, #1a2538, #2a1f2b);
+    height:100vh; overflow:hidden; display:flex;
+    align-items:center; justify-content:center;
+    font-family: sans-serif; color:#fff;
+    padding:20px;
+    flex-direction:column;
+  }
+
+  h1.title {
+    position:absolute; top:20px; width:100%;
+    text-align:center; font-size:2rem; letter-spacing:1px;
+    color:#ffe0f0;
+  }
+
+  .message {
+    position:relative;
+    max-width:700px;
+    text-align:center;
+    font-size:1.2rem;
+    line-height:1.6;
+    color:#ffe0f0;
+  }
+
+  .line {
+    opacity:0;
+    transform: translateY(20px);
+    margin-bottom:12px;
+    transition: opacity 1s ease, transform 1s ease;
+  }
+
+  svg.heart {
+    position:absolute; width:80px; height:80px;
+    fill:none; stroke:#ff6fa7; stroke-width:4;
+    stroke-linecap:round; stroke-linejoin:round;
+    stroke-dasharray:300; stroke-dashoffset:300;
+    opacity:0.9;
+  }
+</style>
+</head>
+<body>
+
+<h1 class="title">For My BABYGIRL 💖</h1>
+
+<div class="message" id="message">
+  <div class="line">Always remember na palangga palangga taghid ka.</div>
+  <div class="line">Biskan ano ma tabo, saton or sakon or saimo, akon pag palangga saimo inde ma dula.</div>
+  <div class="line">Thank you so much for all the things you have done for me.</div>
+  <div class="line">Thank you kay ara ka perme sakon baby, always taghid ka palangga babyko forever.</div>
+  <div class="line">You know that I can sacrifice tanan para simo and I love you so much.</div>
+  <div class="line">Babyko, THANK YOU SA PAG ICHINDE SA PAG PALANGGA KAG PAG SUPPORT SAKON.</div>
+  <div class="line">AKON BABYY ILOVEYOUUUUUUSOMUCHHHHH 💖</div>
+  <div class="line">I WILL ALWAYS ALWAYS ALWAYS LOVE YOU MY BABYGIRL AND THANK THANKYOU ALWAYS BABY MWAAAPS!!! 💖</div>
+</div>
+
+<script>
+  // ====== Animate text lines ======
+  const lines = document.querySelectorAll('.message .line');
+  lines.forEach((line, i) => {
+    setTimeout(() => {
+      line.style.opacity = 1;
+      line.style.transform = 'translateY(0)';
+    }, i * 1200); // delay per line
+  });
+
+  // ====== Heart drawing animation ======
+  const heartPath = "M40 60 C 20 40, 0 25, 20 10 C 30 0, 40 10, 40 20 C 40 10, 50 0, 60 10 C 80 25, 60 40, 40 60 Z";
+
+  function createHeart(){
+    const svg = document.createElementNS("http://www.w3.org/2000/svg","svg");
+    svg.setAttribute("class","heart");
+    svg.setAttribute("viewBox","0 0 80 80");
+    const path = document.createElementNS("http://www.w3.org/2000/svg","path");
+    path.setAttribute("d", heartPath);
+    svg.appendChild(path);
+    document.body.appendChild(svg);
+
+    // random position
+    const w = window.innerWidth, h = window.innerHeight;
+    let x = Math.random()*(w-80), y = Math.random()*(h-80);
+    svg.style.left = x+"px"; svg.style.top = y+"px";
+
+    // animate draw
+    setTimeout(()=>{ 
+      path.style.transition="stroke-dashoffset 2s ease"; 
+      path.style.strokeDashoffset="0";
+    },50);
+
+    // animate float around
+    moveRandom(svg);
+
+    // fade and remove after some time
+    setTimeout(()=>{
+      svg.style.transition="opacity 2s"; 
+      svg.style.opacity=0;
+      setTimeout(()=> svg.remove(),2000);
+    },15000);
+  }
+
+  function moveRandom(el){
+    const w = window.innerWidth, h = window.innerHeight;
+    function step(){
+      const x = Math.random()*(w-80), y=Math.random()*(h-80);
+      el.style.transition="left 4s ease-in-out, top 4s ease-in-out, transform 4s";
+      el.style.left=x+"px"; el.style.top=y+"px";
+      el.style.transform=`rotate(${Math.random()*40-20}deg) scale(${1+Math.random()*0.3})`;
+    }
+    step();
+    setInterval(step,4000);
+  }
+
+  // keep spawning hearts
+  setInterval(createHeart, 1200);
+  for(let i=0;i<6;i++) setTimeout(createHeart, i*600);
+</script>
+</body>
+</html>
